@@ -183,8 +183,8 @@ public class JavaMailSampleSender {
 	}
 
 	public static void main(String[] args) throws MessagingException {
-		String fromUser = "18718995466@163.com";
-		String[] toUsers = new String[] { "2512860484@qq.com" };
+		String fromUser = "test@163.com";
+		String[] toUsers = new String[] { "test@qq.com" };
 		String subject = "JavaMail测试";
 		String content = "<span style='color:red;'>邮箱内容</span>";
 
