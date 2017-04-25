@@ -1,5 +1,7 @@
 package com.yzz.javamail;
 
+import java.util.Date;
+
 public class MailInfo {
 
 	private String fromUser;// 发件人
@@ -9,6 +11,7 @@ public class MailInfo {
 	private String subject;// 主题
 	private String content;// 内容
 	private String[] files;// 文件路径
+	private Date sentDate;//发信日期
 
 	public String getFromUser() {
 		return fromUser;
@@ -64,6 +67,14 @@ public class MailInfo {
 
 	public void setFiles(String[] files) {
 		this.files = files;
+	}
+
+	public Date getSentDate() {
+		return sentDate;
+	}
+
+	public void setSentDate(Date sentDate) {
+		this.sentDate = sentDate;
 	}
 
 }

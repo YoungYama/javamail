@@ -35,6 +35,9 @@ public class JavaMailSampleReceiver {
 					props.getProperty("mail.password"));
 			// 获取邮件服务器的收件箱
 			folder = store.getFolder("INBOX");
+			if (folder == null) {
+				throw new RuntimeException("No POP3 INBOX");
+			}
 			// 以只读权限打开收件箱
 			folder.open(Folder.READ_ONLY);
 			// 获取收件箱中的邮件，也可以使用getMessage(int 邮件的编号)来获取具体某一封邮件
@@ -86,6 +89,7 @@ public class JavaMailSampleReceiver {
 					e.printStackTrace();
 				}
 
+				// messages[i].writeTo(os);
 				System.out.println("----------------------");
 
 			}
@@ -98,15 +102,16 @@ public class JavaMailSampleReceiver {
 		} finally {
 			// 关闭连接
 			try {
-				if (folder != null) {
-					folder.close(false);
+				if (store != null) {
+					store.close();
 				}
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
 			try {
-				if (store != null) {
-					store.close();
+				if (folder != null) {
+					//boolean 表示是否清除已删除的消息从而更新 folder
+					folder.close(false);
 				}
 			} catch (MessagingException e) {
 				e.printStackTrace();

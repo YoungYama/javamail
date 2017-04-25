@@ -1,6 +1,7 @@
 package com.yzz.javamail;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -46,6 +47,7 @@ public class JavaMailSampleSender {
 		String subject = mailInfo.getSubject();
 		String content = mailInfo.getContent();
 		String[] files = mailInfo.getFiles();
+		Date sentDate = mailInfo.getSentDate();
 
 		int toLength = toUsers.length;
 
@@ -98,6 +100,7 @@ public class JavaMailSampleSender {
 				msg.setRecipients(RecipientType.BCC, bccUsersAddress);// 密送人
 			}
 
+			msg.setSentDate(sentDate);//发信日期
 			// 设置主题
 			msg.setSubject(subject);
 			// MiniMultipart类是一个容器类，包含MimeBodyPart类型的对象
@@ -114,6 +117,9 @@ public class JavaMailSampleSender {
 				DataSource source = null;
 				for (String file : files) {
 					usFile = new File(file);
+					if (!usFile.exists()) {
+						continue;
+					}
 					fileBody = new MimeBodyPart();
 					source = new FileDataSource(file);
 					fileBody.setDataHandler(new DataHandler(source));
@@ -163,6 +169,7 @@ public class JavaMailSampleSender {
 		String subject = mailInfo.getSubject();
 		String content = mailInfo.getContent();
 		String[] files = mailInfo.getFiles();
+		Date sentDate = mailInfo.getSentDate();
 
 		int toLength = toUsers.length;
 
@@ -229,6 +236,9 @@ public class JavaMailSampleSender {
 				DataSource source = null;
 				for (String file : files) {
 					usFile = new File(file);
+					if (!usFile.exists()) {
+						continue;
+					}
 					fileBody = new MimeBodyPart();
 					source = new FileDataSource(file);
 					fileBody.setDataHandler(new DataHandler(source));
@@ -237,6 +247,7 @@ public class JavaMailSampleSender {
 				}
 			}
 
+			msg.setSentDate(sentDate);//发信日期
 			// 将MiniMultipart对象设置为邮件内容
 			msg.setContent(mainPart);
 
@@ -264,9 +275,9 @@ public class JavaMailSampleSender {
 	}
 
 	public static void main(String[] args) throws MessagingException {
-		String fromUser = "test@163.com";
-		String[] toUsers = new String[] { "test@163.com" };
-		String[] ccUsers = new String[] { "test@163.com" };
+		String fromUser = "18718995466@163.com";
+		String[] toUsers = new String[] { "18718995466@163.com" };
+		String[] ccUsers = new String[] { "test@qq.com" };
 		String[] bccUsers = new String[] {};
 		String subject = "JavaMail测试";
 		String content = "<span style='color:red;'>邮箱内容</span>";
@@ -282,8 +293,10 @@ public class JavaMailSampleSender {
 		mailInfo.setSubject(subject);
 		mailInfo.setContent(content);
 		mailInfo.setFiles(files);
+		mailInfo.setSentDate(new Date());
 
 		sendTextMail(mailInfo);
-		// sendHtmlMail(mailInfo);
+//		 sendHtmlMail(mailInfo);
+		System.out.println("ok");
 	}
 }
